@@ -1,0 +1,254 @@
+/* GLOBAL STYLE */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* GLOBAL CSS VARIABLES */
+:root {
+  --mainBlue: #1d03b6;
+  --mainWhite: #fff;
+  --mainGray: rgb(170, 169, 169);
+}
+/* END OF GLOBAL CSS VARIABLES */
+/* END OF GLOBAL STYLE */
+
+/* ******************************************************* */
+
+/* HEADER STYLES */
+.main-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  background-color: var(--mainBlue);
+}
+
+.top-mall-logo {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--mainWhite);
+  border-radius: 50%;
+}
+
+.main-header img {
+  width: 30px;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 60%;
+  /* background-color: green; */
+  position: relative;
+}
+
+.search-bar input {
+  background-color: var(--mainWhite);
+  padding: 10px 10px 10px 50px;
+  border: none;
+  border-radius: 50px;
+  width: 100%;
+  font-size: 15x;
+}
+
+.search-bar input:focus {
+  /* border: solid 2px green; */
+  outline: none;
+  /* background-color: red; */
+}
+
+.search-icon {
+  font-size: 20px;
+  color: var(--mainGray);
+  position: absolute;
+  left: 10px;
+}
+
+.help-user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  color: white;
+  font-size: 20px;
+}
+
+.help-icon {
+  color: var(--mainBlue);
+  background-color: var(--mainWhite);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-icon {
+  margin-left: 10px;
+  color: var(--mainBlue);
+  background-color: var(--mainWhite);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* DESKTOP SCREEN FOR HEADER */
+@media screen and (min-width: 550px) {
+  .main-header img {
+    width: 40px;
+  }
+
+  .top-mall-logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .search-bar {
+    width: 50%;
+  }
+
+  .search-icon {
+    font-size: 25px;
+  }
+
+  .search-bar input {
+    font-size: 20px;
+    padding-left: 70px;
+  }
+
+  .help-user {
+    font-size: 30px;
+  }
+
+  .help-icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  .user-icon {
+    margin-left: 30px;
+    width: 45px;
+    height: 45px;
+  }
+}
+/* END OF DESKTOP SCREEN FOR HEADER */
+
+/* END OF HEADER STYLES */
+
+/* ******************************************************* */
+
+/* PAGE CONTENT STYLES */
+
+.page-content {
+  width: 100vw;
+}
+
+/* DESKTOP STYLES FOR PAGE CONTENT */
+@media screen and (min-width: 550px) {
+  .page-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+}
+/* END OF DESKTOP STYLES FOR PAGE CONTENT */
+
+/* CATEGORIES STYLES */
+.category-div {
+  /* width: 100%;
+  height: 100vh; */
+  background-color: red;
+  display: none;
+}
+
+/* DESKTOP STYLES FOR CATEGORIES */
+@media screen and (min-width: 550px) {
+  .category-div {
+    display: flex;
+  }
+}
+/* END OF DESKTOP STYLES FOR CATEGORIES */
+
+/* END OF CATEGORIES STYLES */
+
+/* ******************************************************* */
+
+/* MAIN CONTENT STYLES */
+.main-content {
+  width: 100vw;
+}
+
+/* CONTENT HEAD STYLES */
+
+.content-head {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-head-image {
+  width: 90%;
+}
+
+.content-head-image img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+/* END OF CONTENT HEAD STYLES */
+
+/* DESKTOP STYLES FOR MAIN CONTENT */
+@media screen and (min-width: 550px) {
+  .main-content {
+    width: 100%;
+    /* background-color: green; */
+  }
+
+  .content-head-image {
+    width: 98%;
+  }
+}
+/* END OF DESKTOP STYLES FOR MAIN CONTENT */
+
+/* END OF MAIN CONTENT STYLES */
+
+/* ******************************************************* */
+
+/* FILTER STYLES */
+.filter-div {
+  /* width: 100%; */
+  /* height: 100vh; */
+  background-color: blue;
+  display: none;
+}
+
+/* DESKTOP STYLES FOR FILTERS */
+@media screen and (min-width: 550px) {
+  .filter-div {
+    display: flex;
+  }
+}
+/* END OF DESKTOP STYLES FOR FILTERS */
+/* END OF FILTER STYLES */
+
+/* ******************************************************* */
+
+/* END OF PAGE CONTENT STYLES */
+
+/* ******************************************************* */
+/* ******************************************************* */
+/* ******************************************************* */
+/* ******************************************************* */
+/* ******************************************************* */
+/* ******************************************************* */
