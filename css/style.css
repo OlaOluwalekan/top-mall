@@ -320,6 +320,12 @@
 }
 
 /* TAB AND DESKTOP SCREENS FOR PRODUCTS LIST */
+@media screen and (min-width: 360px) {
+  .product-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media screen and (min-width: 600px) {
   .product-list {
     grid-template-columns: repeat(4, 1fr);
