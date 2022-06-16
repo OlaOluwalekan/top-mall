@@ -41,12 +41,16 @@ let Product5 = new Product(
 // let rndNo = Math.random() * 5;
 // let rndNoUp = Math.ceil(rndNo);
 
+const randomNumber = [
+  3, 5, 3, 1, 4, 2, 3, 1, 2, 5, 2, 3, 4, 3, 1, 3, 2, 5, 1, 2,
+];
+
 const productList = [Product1, Product2, Product3, Product4, Product5];
-for (let i = 0; i < 20; i++) {
-  let roundNo = Math.random() * 5;
-  let randomNo = Math.ceil(roundNo);
-  console.log(randomNo);
-  switch (randomNo) {
+for (let i = 0; i < randomNumber.length; i++) {
+  // let roundNo = Math.random() * 5;
+  // let randomNo = Math.ceil(roundNo);
+  // console.log(randomNo);
+  switch (randomNumber[i]) {
     case 1:
       productList.push(Product1);
       break;

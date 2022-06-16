@@ -17,7 +17,7 @@
       <!-- HEADER CONTAINING LOGO, SEARCH BAR, HELP AND USER ACCOUNT -->
       <header class="main-header">
         <div class="top-mall-logo">
-          <img src="./images/top-mall-logo.png" alt="" />
+          <img src="./images/top-mall-logo.png" alt="Top Mall Logo" />
         </div>
 
         <div class="search-bar">
@@ -37,52 +37,189 @@
             <i class="fas fa-question"></i>
           </div>
           <div class="user-icon">
-            <i class="fas fa-user"></i>
+            <div class="not-loggedin-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="loggedin-user-icon"><h1>T</h1></div>
+          </div>
+        </div>
+
+        <div class="user-options">
+          <div class="cart-overview">
+            <div class="cart-overview-no">
+              <div class="item-in-cart"><h5>0</h5></div>
+              <div class="cart-icon"><i class="fas fa-cart-plus"></i></div>
+            </div>
+            <div class="goto-cart"><button>View Cart</button></div>
+          </div>
+          <div class="goto-profile">
+            <h4>Profile</h4>
+          </div>
+          <div class="log-out">
+            <h4>Log Out</h4>
           </div>
         </div>
       </header>
       <!-- END OF HEADER -->
 
-      <!-- PAGE CONTENTS CONTAINING PRODUCTS, OFFERS, ETC -->
+      <!-- ERROR DIALOG -->
+      <div class="error-alert">
+        <div class="error-msg">
+          <div class="error-icon">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h4>Error</h4>
+        </div>
 
-      <div class="page-content">
-        <!-- CATEGORIES DIV -->
-        <section class="category-div">
-          <div class="category category1"><h4>Health and Beauty</h4></div>
-          <div class="category category2"><h4>Grocery</h4></div>
-          <div class="category category3"><h4>Fashion</h4></div>
-          <div class="category category4"><h4>Computing</h4></div>
-          <div class="category category5"><h4>Electronics</h4></div>
-          <div class="category category6"><h4>Phones and Tablets</h4></div>
-          <div class="category category7"><h4>Baby Products</h4></div>
-          <div class="category category8"><h4>Gaming</h4></div>
-          <div class="category category9"><h4>Home and Office</h4></div>
-          <div class="category category10"><h4>Others</h4></div>
-        </section>
-        <!-- END OF CATEGORIES DIV -->
-
-        <!-- MAIN CONTENT DIV -->
-        <section class="main-content">
-          <header class="content-head">
-            <div class="content-head-image">
-              <img
-                id="contentImage"
-                src="./images/content-head-images/girl-colourful.jpg"
-                alt="Images"
-              />
-            </div>
-          </header>
-
-          <!-- PRODUCT LIST -->
-          <div class="product-list"></div>
-          <!-- END OF PRODUCT LIST -->
-        </section>
-        <!-- END OF MAIN CONTENT DIV -->
-
-        <!-- FILTER DIV -->
-        <section class="filter-div">some content</section>
-        <!-- END OF FILTER DIV -->
+        <button>Ok</button>
       </div>
+    </div>
+    <!-- END OF ERROR DIALOG -->
+
+    <!-- REGISTER AND LOGIN DIV -->
+    <div class="login-reg-container">
+      <div class="close-login-reg"><i class="fas fa-times"></i></div>
+      <div class="login-div">
+        <div class="login-head"><h1>Login</h1></div>
+        <div class="email-container">
+          <div class="email-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <input
+            type="email"
+            name="email"
+            id="userEmailLogin"
+            placeholder="E-mail"
+          />
+        </div>
+        <div class="pass-container">
+          <div class="pass-icon">
+            <i class="fas fa-key"></i>
+          </div>
+          <input
+            type="password"
+            name="password"
+            id="userPassLogin"
+            placeholder="Password"
+          />
+        </div>
+        <button class="login-btn">Login</button>
+        <div class="goto-register">
+          Don't have an account? <span>Register Here</span>
+        </div>
+      </div>
+
+      <div class="register-div">
+        <div class="register-head"><h1>Register</h1></div>
+        <div class="email-container">
+          <div class="email-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <input
+            type="email"
+            name="email"
+            id="userEmailReg"
+            placeholder="E-mail"
+          />
+        </div>
+
+        <div class="name-container">
+          <div class="name-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <input
+            type="text"
+            name="name"
+            id="userName"
+            placeholder="Full Name"
+          />
+        </div>
+
+        <div class="phone-container">
+          <div class="phone-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <input
+            type="tel"
+            name="phone"
+            id="userPhone"
+            placeholder="Phone Number"
+          />
+        </div>
+
+        <div class="pass-container">
+          <div class="pass-icon">
+            <i class="fas fa-key"></i>
+          </div>
+          <input
+            type="password"
+            name="password"
+            id="userPassReg"
+            placeholder="Password"
+          />
+        </div>
+
+        <div class="pass-container">
+          <div class="pass-icon">
+            <i class="fas fa-key"></i>
+          </div>
+          <input
+            type="password"
+            name="password"
+            id="userRePass"
+            placeholder="Confirm Password"
+          />
+        </div>
+        <button class="register-btn">Register</button>
+        <div class="goto-login">
+          Already have an account? <span>Login Here</span>
+        </div>
+      </div>
+    </div>
+    <!-- END OF REGISTER AND LOGIN DIV -->
+
+    <!-- PAGE CONTENTS CONTAINING PRODUCTS, OFFERS, ETC -->
+
+    <div class="page-content">
+      <!-- CATEGORIES DIV -->
+      <section class="category-div">
+        <div class="category category1"><h4>Health and Beauty</h4></div>
+        <div class="category category2"><h4>Grocery</h4></div>
+        <div class="category category3"><h4>Fashion</h4></div>
+        <div class="category category4"><h4>Computing</h4></div>
+        <div class="category category5"><h4>Electronics</h4></div>
+        <div class="category category6"><h4>Phones and Tablets</h4></div>
+        <div class="category category7"><h4>Baby Products</h4></div>
+        <div class="category category8"><h4>Gaming</h4></div>
+        <div class="category category9"><h4>Home and Office</h4></div>
+        <div class="category category10"><h4>Others</h4></div>
+      </section>
+      <!-- END OF CATEGORIES DIV -->
+
+      <!-- MAIN CONTENT DIV -->
+      <section class="main-content">
+        <header class="content-head">
+          <div class="content-head-image">
+            <img
+              id="contentImage"
+              src="./images/content-head-images/girl-colourful.jpg"
+              alt="Images"
+            />
+          </div>
+        </header>
+
+        <!-- PRODUCT LIST -->
+        <div class="product-list"></div>
+        <!-- END OF PRODUCT LIST -->
+      </section>
+      <!-- END OF MAIN CONTENT DIV -->
+
+      <!-- FILTER DIV -->
+      <section class="filter-div">some content</section>
+      <!-- END OF FILTER DIV -->
 
       <!-- END OF PAGE CONTENT -->
     </div>
