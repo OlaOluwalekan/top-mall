@@ -10,10 +10,12 @@ import {
   gotoCart,
   gotoProfile,
   logOut,
+  itemInCartH5,
 } from "./header.js";
 // import { usersId, usersDetails } from "./login-register.js";
 // import { productNameDiv } from "./product-details.js";
 
+// VARIABLES DECLARATION
 let productId = [];
 
 let usersId = JSON.parse(localStorage.getItem("storedEmails"));
@@ -30,13 +32,29 @@ let contentHeadImage = [
   "./images/content-head-images/discount.png",
 ];
 
-// let currentUserEmail = "";
+// ****************************************************
 
-let SetCurrentUserEmpty = () => {
-  let currentUser = "";
-  localStorage.setItem("currentUser", currentUser);
+// ****************************************************
+
+// WHEN WINDOW LOADS
+window.onload = () => {
+  for (let i = 0; i < productList.length; i++) {
+    productId.push(i);
+  }
+  containerForAll.prepend(pagesHeader);
+
+  CheckLoginStatus();
+
+  ChangeImage();
+
+  LoadProductList();
 };
 
+// ****************************************************
+
+// ****************************************************
+
+// SHOW RANDOM IMAGE ON PAGE CONTENT HEAD
 let ChangeImage = () => {
   let headImageInterval = 2000;
   for (let i = 0; i < contentHeadImage.length; i++) {
@@ -50,10 +68,14 @@ let ChangeImage = () => {
   }
 };
 
+// ****************************************************
+
+// ****************************************************
+
+// LOAD PRODUCTS TO PAGE CONTENT
 let LoadProductList = () => {
   let currentUser = localStorage.getItem("currentUser");
   let currentUserIndex = usersId.indexOf(currentUser);
-  let currentUserLikedItems = usersDetails[currentUserIndex].likedItems;
   for (let i = 0; i < productList.length; i++) {
     const productContainer = document.createElement("div");
     const productImageDiv = document.createElement("div");
@@ -97,6 +119,7 @@ let LoadProductList = () => {
     const productAddToCart = document.createElement("i");
     productAddToCartDiv.appendChild(productAddToCart);
     productAddToCart.classList.add("fas", "fa-cart-plus");
+    productAddToCartDiv.id = i;
 
     const productLike = document.createElement("i");
     productLikeDiv.appendChild(productLike);
@@ -119,28 +142,35 @@ let LoadProductList = () => {
 
     productImageDiv.addEventListener("click", ShowProduct);
     productLikeDiv.addEventListener("click", AddToLike);
+    productAddToCartDiv.addEventListener("click", AddToCart);
 
-    // if (currentUser != "") {
-    //   if (currentUserLikedItems.includes(i)) {
-    //     // productLikeDiv.style.color = "red";
-    //     console.log(currentUserLikedItems);
-    //   }
-    // }
+    // productLikeDiv.style.color = "red";
+    if (currentUser != "") {
+      let currentUserLikedItems = usersDetails[currentUserIndex].likedItems;
+      let currentUserCartItems = usersDetails[currentUserIndex].cartItems;
+      for (let j = 0; j < currentUserLikedItems.length; j++) {
+        if (currentUserLikedItems[j] == i) {
+          productLikeDiv.style.color = "red";
+          // console.log(i + " : " + currentUserLikedItems);
+          // console.log(productLikeDiv);
+        }
+      }
+
+      for (let j = 0; j < currentUserCartItems.length; j++) {
+        if (currentUserCartItems[j] == i) {
+          productAddToCartDiv.style.color = "red";
+          // console.log(i + " : " + currentUserLikedItems);
+          // console.log(productLikeDiv);
+        }
+      }
+      itemInCartH5.textContent = currentUserCartItems.length;
+    }
   }
 };
 
-window.onload = () => {
-  for (let i = 0; i < productList.length; i++) {
-    productId.push(i);
-  }
-  containerForAll.prepend(pagesHeader);
+// ****************************************************
 
-  CheckLoginStatus();
-
-  ChangeImage();
-
-  LoadProductList();
-};
+// ****************************************************
 
 // SHOW PRODUCT DETAILS
 let productFullDetailsDiv = document.querySelector(".product-full-details");
@@ -164,6 +194,11 @@ goBackFromDetails.onclick = () => {
   UnBlurBackground();
 };
 
+// ****************************************************
+
+// ****************************************************
+
+// ADD PRODUCTS TO LIKED ITEMS
 function AddToLike() {
   let currentUser = localStorage.getItem("currentUser");
   if (currentUser == "") {
@@ -195,6 +230,48 @@ function AddToLike() {
   }
 }
 
+// ****************************************************
+
+// ****************************************************
+
+// ADD PRODUCTS TO CART ITEM
+function AddToCart() {
+  let currentUser = localStorage.getItem("currentUser");
+  if (currentUser == "") {
+    alert("You need to login first");
+    window.location.href = "./pages/login-register.html";
+  } else {
+    let clickedId = this.id;
+    let currentUserId = usersId.indexOf(currentUser);
+    let currentUserCartItems = usersDetails[currentUserId].cartItems;
+    if (currentUserCartItems.includes(clickedId)) {
+      // let likedIndex = userLikedItems.indexOf(productList[this.id]);
+      let likedIndex = currentUserCartItems.indexOf(clickedId);
+      currentUserCartItems.splice(likedIndex, 1);
+      // currentUserLikedItems.splice(this.id, 1);
+      this.style.color = "grey";
+      usersDetails[currentUserId].cartItems = currentUserCartItems;
+    } else {
+      // userLikedItems.push(productList[this.id]);
+      currentUserCartItems.push(clickedId);
+      this.style.color = "red";
+      usersDetails[currentUserId].cartItems = currentUserCartItems;
+    }
+    // console.log(userLikedItems);
+    // localStorage.setItem(currentUserLikedItems,);
+    console.log(usersDetails[currentUserId].cartItems);
+    itemInCartH5.textContent = usersDetails[currentUserId].cartItems.length;
+
+    // console.log(usersDetails);
+    localStorage.setItem("storedEmails", JSON.stringify(usersId));
+    localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
+  }
+}
+
+// ****************************************************
+
+// ****************************************************
+
 // CHECK IF A USER IS LOGGED IN
 let CheckLoginStatus = () => {
   let currentUser = localStorage.getItem("currentUser");
@@ -209,6 +286,11 @@ let CheckLoginStatus = () => {
   }
 };
 
+// ****************************************************
+
+// ****************************************************
+
+// DIRECTS USER TO LOGIN OR GOTO CART OR PROFILE
 userIconDiv.onclick = () => {
   let currentUser = localStorage.getItem("currentUser");
   if (currentUser == "") {
@@ -222,6 +304,29 @@ userIconDiv.onclick = () => {
   }
 };
 
+// ****************************************************
+
+// ****************************************************
+
+// TAKE USER TO CART
+gotoCart.onclick = () => {
+  window.location.href = "./pages/cart.html";
+};
+
+// ****************************************************
+
+// ****************************************************
+
+// TAKE USER TO PROFILE
+gotoProfile.onclick = () => {
+  window.location.href = "./pages/profile.html";
+};
+
+// ****************************************************
+
+// ****************************************************
+
+// BLUR AND UNBLUR BACKGROUND
 let pageContent = document.querySelector(".page-content");
 let BlurBackground = () => {
   pageContent.style.display = "none";
@@ -230,6 +335,10 @@ let BlurBackground = () => {
 let UnBlurBackground = () => {
   pageContent.style.display = "flex";
 };
+
+// ************************************************
+
+// ************************************************
 
 // ERROR ALERT
 let errorDiv = document.querySelector(".error-alert");
@@ -260,7 +369,16 @@ let MsgAlert = (errMsg, type) => {
   };
 };
 
+// ************************************************
+
+// ************************************************
+
 // LOGOUT USER
+
+let SetCurrentUserEmpty = () => {
+  let currentUser = "";
+  localStorage.setItem("currentUser", currentUser);
+};
 
 logOut.onclick = () => {
   SetCurrentUserEmpty();

@@ -134,4 +134,5 @@ export {
   gotoCart,
   gotoProfile,
   logOut,
+  itemInCartH5,
 };

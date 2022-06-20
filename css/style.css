@@ -763,6 +763,42 @@
 /* END OF PRODUCT DETAILS STYLE */
 
 /* ******************************************************* */
+
+/* CART ITEMS STYLES */
+.cart-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--mainBlue);
+  color: var(--mainWhite);
+  padding: 10px;
+}
+
+.back-from-cart {
+  margin-right: 20px;
+  font-size: 25px;
+}
+/* END OF CART ITEMS STYLES */
+
 /* ******************************************************* */
+
+/* PROFILE STYLES */
+.profile-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--mainBlue);
+  color: var(--mainWhite);
+  padding: 10px;
+}
+
+.back-from-profile {
+  margin-right: 20px;
+  font-size: 25px;
+}
+/* END OF PROFILE STYLES */
+
 /* ******************************************************* */
 /* ******************************************************* */
