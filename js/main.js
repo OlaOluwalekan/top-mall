@@ -1,9 +1,28 @@
 import { productList } from "./products.js";
 import { Users } from "./users.js";
+import {
+  pagesHeader,
+  userIconDiv,
+  userOptions,
+  notLogedinIconDiv,
+  loggedinIconDiv,
+  loggedinIconText,
+  gotoCart,
+  gotoProfile,
+  logOut,
+} from "./header.js";
+// import { usersId, usersDetails } from "./login-register.js";
+// import { productNameDiv } from "./product-details.js";
 
+let productId = [];
+
+let usersId = JSON.parse(localStorage.getItem("storedEmails"));
+let usersDetails = JSON.parse(localStorage.getItem("storedDetails"));
+
+let containerForAll = document.querySelector(".container");
 let contentHeadImageDiv = document.getElementById("contentImage");
 let productListDiv = document.querySelector(".product-list");
-let userLoggedIn = false;
+let productDetailsDiv = document.querySelector(".product-details");
 
 let contentHeadImage = [
   "./images/content-head-images/girl-colourful.jpg",
@@ -11,7 +30,12 @@ let contentHeadImage = [
   "./images/content-head-images/discount.png",
 ];
 
-let currentUserEmail = "";
+// let currentUserEmail = "";
+
+let SetCurrentUserEmpty = () => {
+  let currentUser = "";
+  localStorage.setItem("currentUser", currentUser);
+};
 
 let ChangeImage = () => {
   let headImageInterval = 2000;
@@ -26,7 +50,10 @@ let ChangeImage = () => {
   }
 };
 
-window.onload = () => {
+let LoadProductList = () => {
+  let currentUser = localStorage.getItem("currentUser");
+  let currentUserIndex = usersId.indexOf(currentUser);
+  let currentUserLikedItems = usersDetails[currentUserIndex].likedItems;
   for (let i = 0; i < productList.length; i++) {
     const productContainer = document.createElement("div");
     const productImageDiv = document.createElement("div");
@@ -74,6 +101,7 @@ window.onload = () => {
     const productLike = document.createElement("i");
     productLikeDiv.appendChild(productLike);
     productLike.classList.add("fas", "fa-heart");
+    productLikeDiv.id = i;
 
     productActionsDiv.appendChild(productAddToCartDiv);
     productActionsDiv.appendChild(productLikeDiv);
@@ -86,201 +114,121 @@ window.onload = () => {
     productContainer.appendChild(productImageDiv);
     productContainer.appendChild(productDetails);
     productContainer.classList.add("product-container");
-    productContainer.id = "product" + i;
-
+    productImageDiv.id = i;
     productListDiv.appendChild(productContainer);
-    // productContainer.setAttribute("onclick", "ShowProduct()");
-    // productContainer.onclick = (this) => {
-    //   console.log(this);
-    // };
 
-    productLikeDiv.setAttribute("onclick", "AddToLike(this)");
-    // console.log(productContainer);
+    productImageDiv.addEventListener("click", ShowProduct);
+    productLikeDiv.addEventListener("click", AddToLike);
+
+    // if (currentUser != "") {
+    //   if (currentUserLikedItems.includes(i)) {
+    //     // productLikeDiv.style.color = "red";
+    //     console.log(currentUserLikedItems);
+    //   }
+    // }
   }
+};
+
+window.onload = () => {
+  for (let i = 0; i < productList.length; i++) {
+    productId.push(i);
+  }
+  containerForAll.prepend(pagesHeader);
+
+  CheckLoginStatus();
 
   ChangeImage();
-  // AddToProductList();
-  // ShowProduct();
 
-  LoadUsers();
-  CheckLoginStatus();
-  // console.log(currentUserEmail);
+  LoadProductList();
 };
 
-function ShowProduct(product) {
-  console.log(product.id);
+// SHOW PRODUCT DETAILS
+let productFullDetailsDiv = document.querySelector(".product-full-details");
+let goBackFromDetails = document.querySelector(".back-arrow");
+let productName = document.querySelector(".product-details-head h1");
+let productDetailsImage = document.querySelector(".product-details-image img");
+let productDetailsPrice = document.querySelector(".product-details-price h1");
+
+function ShowProduct() {
+  productName.textContent = productList[this.id].name;
+  productDetailsImage.src = productList[this.id].imageURL;
+  productDetailsPrice.textContent = productList[this.id].price;
+
+  productFullDetailsDiv.style.display = "flex";
+  BlurBackground();
+  // console.log(myUrl);
 }
 
-// LOAD ALL USERS FROM DATABASE
-let LoadUsers = () => {
-  let storedEmails = JSON.parse(localStorage.getItem("storedEmails"));
-  let storedDetails = JSON.parse(localStorage.getItem("storedDetails"));
-
-  for (let i = 0; i < storedEmails.length; i++) {
-    usersId.push(storedEmails[i]);
-    usersDetails.push(storedDetails[i]);
-  }
-  console.log(usersId);
-  console.log(usersDetails);
+goBackFromDetails.onclick = () => {
+  productFullDetailsDiv.style.display = "none";
+  UnBlurBackground();
 };
+
+function AddToLike() {
+  let currentUser = localStorage.getItem("currentUser");
+  if (currentUser == "") {
+    alert("You need to login first");
+    window.location.href = "./pages/login-register.html";
+  } else {
+    let clickedId = this.id;
+    let currentUserId = usersId.indexOf(currentUser);
+    let currentUserLikedItems = usersDetails[currentUserId].likedItems;
+    if (currentUserLikedItems.includes(clickedId)) {
+      // let likedIndex = userLikedItems.indexOf(productList[this.id]);
+      let likedIndex = currentUserLikedItems.indexOf(clickedId);
+      currentUserLikedItems.splice(likedIndex, 1);
+      // currentUserLikedItems.splice(this.id, 1);
+      this.style.color = "grey";
+      usersDetails[currentUserId].likedItems = currentUserLikedItems;
+    } else {
+      // userLikedItems.push(productList[this.id]);
+      currentUserLikedItems.push(clickedId);
+      this.style.color = "red";
+      usersDetails[currentUserId].likedItems = currentUserLikedItems;
+    }
+    // console.log(userLikedItems);
+    // localStorage.setItem(currentUserLikedItems,);
+    console.log(usersDetails[currentUserId].likedItems);
+    // console.log(usersDetails);
+    localStorage.setItem("storedEmails", JSON.stringify(usersId));
+    localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
+  }
+}
 
 // CHECK IF A USER IS LOGGED IN
 let CheckLoginStatus = () => {
   let currentUser = localStorage.getItem("currentUser");
   if (currentUser == "") {
-    notLoggedinUserIcon.style.display = "flex";
-    loggedinUserIcon.style.display = "none";
+    notLogedinIconDiv.style.display = "flex";
+    loggedinIconDiv.style.display = "none";
   } else {
     let currentUserFirstLetter = currentUser.charAt(0).toUpperCase();
-    loggedinUserIcon.innerHTML = `<h1>${currentUserFirstLetter}</h1>`;
-    notLoggedinUserIcon.style.display = "none";
-    loggedinUserIcon.style.display = "flex";
+    loggedinIconText.textContent = currentUserFirstLetter;
+    notLogedinIconDiv.style.display = "none";
+    loggedinIconDiv.style.display = "flex";
   }
 };
 
-let userIcon = document.querySelector(".user-icon");
-let loginRegDiv = document.querySelector(".login-reg-container");
-let loginRegClose = document.querySelector(".close-login-reg");
-let loginDiv = document.querySelector(".login-div");
-let regDiv = document.querySelector(".register-div");
-let gotoLogin = document.querySelector(".goto-login");
-let gotoReg = document.querySelector(".goto-register");
-let userOptions = document.querySelector(".user-options");
-
-// userIcon.onmouseover = () => {
-//   if (userLoggedIn == true) {
-//     userOptions.style.display = "flex";
-//   }
-// };
-
-// userOptions.onmouseout = () => {
-//   userOptions.style.display = "none";
-// };
-
-userIcon.onclick = () => {
+userIconDiv.onclick = () => {
   let currentUser = localStorage.getItem("currentUser");
   if (currentUser == "") {
-    loginRegDiv.style.display = "flex";
-    BlurBackground();
+    window.location.href = "./pages/login-register.html";
   } else {
-    if (userOptions.style.display == "flex") {
-      userOptions.style.display = "none";
-    } else {
+    if (userOptions.style.display == "none") {
       userOptions.style.display = "flex";
-    }
-  }
-  // window.scroll = false;
-};
-
-loginRegClose.onclick = () => {
-  loginRegDiv.style.display = "none";
-  regDiv.style.display = "none";
-  loginDiv.style.display = "flex";
-  ClearAll();
-  UnBlurBackground();
-};
-
-gotoReg.onclick = () => {
-  loginDiv.style.display = "none";
-  regDiv.style.display = "flex";
-};
-
-gotoLogin.onclick = () => {
-  regDiv.style.display = "none";
-  loginDiv.style.display = "flex";
-};
-
-// REGSITER USERS
-
-let registerBtn = document.querySelector(".register-btn");
-let userEmailReg = document.getElementById("userEmailReg");
-let userNameReg = document.getElementById("userName");
-let userPhoneReg = document.getElementById("userPhone");
-let userPassReg = document.getElementById("userPassReg");
-let userRePassReg = document.getElementById("userRePass");
-
-let usersId = [];
-let usersDetails = [];
-
-registerBtn.onclick = () => {
-  if (
-    userEmailReg.value == "" ||
-    userNameReg.value == "" ||
-    userPhoneReg.value == "" ||
-    userPassReg.value == "" ||
-    userRePassReg.value == ""
-  ) {
-    MsgAlert("Some require fields are empty", "fa-info");
-  } else {
-    if (userPassReg.value != userRePassReg.value) {
-      MsgAlert("Password does not match");
     } else {
-      if (usersId.includes(userEmailReg.value.toLowerCase())) {
-        MsgAlert("This email is already registered. Please login");
-      } else {
-        usersId.push(userEmailReg.value);
-        let newUser = new Users(
-          userEmailReg.value.toLowerCase(),
-          userNameReg.value,
-          userPhoneReg.value,
-          userPassReg.value,
-          false
-        );
-        usersDetails.push(newUser);
-        localStorage.setItem("storedEmails", JSON.stringify(usersId));
-        localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
-        MsgAlert("Registration Successful", "success");
-        ClearAll();
-        regDiv.style.display = "none";
-        loginDiv.style.display = "flex";
-        setTimeout(() => {
-          location.reload();
-        }, 3000);
-      }
+      userOptions.style.display = "none";
     }
   }
 };
 
-// LOGIN USERS
-let loginBtn = document.querySelector(".login-btn");
-let userEmailLogin = document.getElementById("userEmailLogin");
-let userPassLogin = document.getElementById("userPassLogin");
-let loggedinUserIcon = document.querySelector(".loggedin-user-icon");
-let notLoggedinUserIcon = document.querySelector(".not-loggedin-icon");
+let pageContent = document.querySelector(".page-content");
+let BlurBackground = () => {
+  pageContent.style.display = "none";
+};
 
-loginBtn.onclick = () => {
-  if (userEmailLogin.value == "" || userPassLogin.value == "") {
-    MsgAlert("Some required fields are empty");
-  } else {
-    if (!usersId.includes(userEmailLogin.value.toLowerCase())) {
-      MsgAlert("This email is not registered. Please register first");
-    } else {
-      let indexOfUser = usersId.indexOf(userEmailLogin.value.toLowerCase());
-      let correctPassword = usersDetails[indexOfUser].password;
-      console.log(indexOfUser);
-      console.log(correctPassword);
-      if (userPassLogin.value == correctPassword) {
-        userLoggedIn = true;
-        usersDetails[indexOfUser].loginStatus = true;
-        currentUserEmail = userEmailLogin.value;
-        localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
-        localStorage.setItem("currentUser", currentUserEmail);
-        MsgAlert("Login Successful", "success");
-        loginRegDiv.style.display = "none";
-        regDiv.style.display = "none";
-        loginDiv.style.display = "flex";
-        UnBlurBackground();
-        ClearAll();
-
-        console.log(usersDetails);
-        setTimeout(() => {
-          location.reload();
-        }, 3000);
-      } else {
-        MsgAlert("Invalid password");
-      }
-    }
-  }
+let UnBlurBackground = () => {
+  pageContent.style.display = "flex";
 };
 
 // ERROR ALERT
@@ -312,31 +260,14 @@ let MsgAlert = (errMsg, type) => {
   };
 };
 
-let allInput = document.querySelectorAll(".login-reg-container input");
-
-let ClearAll = () => {
-  for (let i = 0; i < allInput.length; i++) {
-    allInput[i].value = "";
-  }
-};
-
-let pageContent = document.querySelector(".page-content");
-let BlurBackground = () => {
-  pageContent.style.display = "none";
-};
-
-let UnBlurBackground = () => {
-  pageContent.style.display = "flex";
-};
-
 // LOGOUT USER
-let logOut = document.querySelector(".log-out");
 
 logOut.onclick = () => {
-  currentUserEmail = "";
-  localStorage.setItem("currentUser", currentUserEmail);
+  SetCurrentUserEmpty();
   MsgAlert("You have successfyly logout", "success");
   setTimeout(() => {
     location.reload();
   }, 3000);
 };
+
+export { ShowProduct };

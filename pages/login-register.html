@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Register</title>
+
+    <!-- CSS STYLE LINK -->
+    <link rel="stylesheet" href="../css/style.css" />
+
+    <!-- FONT AWESOME ICONS -->
+    <script src="../js/all.js"></script>
+  </head>
+  <body>
+    <!-- REGISTER AND LOGIN DIV -->
+    <div class="login-reg-container">
+      <div class="close-login-reg"><i class="fas fa-times"></i></div>
+      <div class="login-div">
+        <div class="login-head"><h1>Login</h1></div>
+        <div class="email-container">
+          <div class="email-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <input
+            type="email"
+            name="email"
+            id="userEmailLogin"
+            placeholder="E-mail"
+          />
+        </div>
+        <div class="pass-container">
+          <div class="pass-icon">
+            <i class="fas fa-key"></i>
+          </div>
+          <input
+            type="password"
+            name="password"
+            id="userPassLogin"
+            placeholder="Password"
+          />
+        </div>
+        <button class="login-btn">Login</button>
+        <div class="goto-register">
+          Don't have an account? <span>Register Here</span>
+        </div>
+      </div>
+
+      <div class="register-div">
+        <div class="register-head"><h1>Register</h1></div>
+        <div class="email-container">
+          <div class="email-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <input
+            type="email"
+            name="email"
+            id="userEmailReg"
+            placeholder="E-mail"
+          />
+        </div>
+
+        <div class="name-container">
+          <div class="name-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <input
+            type="text"
+            name="name"
+            id="userName"
+            placeholder="Full Name"
+          />
+        </div>
+
+        <div class="phone-container">
+          <div class="phone-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <input
+            type="tel"
+            name="phone"
+            id="userPhone"
+            placeholder="Phone Number"
+          />
+        </div>
+
+        <div class="pass-container">
+          <div class="pass-icon">
+            <i class="fas fa-key"></i>
+          </div>
+          <input
+            type="password"
+            name="password"
+            id="userPassReg"
+            placeholder="Password"
+          />
+        </div>
+
+        <div class="pass-container">
+          <div class="pass-icon">
+            <i class="fas fa-key"></i>
+          </div>
+          <input
+            type="password"
+            name="password"
+            id="userRePass"
+            placeholder="Confirm Password"
+          />
+        </div>
+        <button class="register-btn">Register</button>
+        <div class="goto-login">
+          Already have an account? <span>Login Here</span>
+        </div>
+      </div>
+    </div>
+    <!-- END OF REGISTER AND LOGIN DIV -->
+
+    <!-- ERROR DIALOG -->
+      <div class="error-alert">
+        <div class="error-msg">
+          <div class="error-icon">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h4>Error</h4>
+        </div>
+
+        <button>Ok</button>
+      </div>
+    </div>
+    <!-- END OF ERROR DIALOG -->
+
+    <!-- JAVASCRIPT LINK -->
+    <script src="../js/login-register.js" type="module"></script>
+  </body>
+</html>

@@ -69,4 +69,9 @@ for (let i = 0; i < randomNumber.length; i++) {
   }
 }
 
-export { productList };
+let productId = [];
+for (let i = 0; i < productList.length; i++) {
+  productId.push[i];
+}
+
+export { productList, productId };

@@ -186,6 +186,10 @@
   padding: 10px;
 }
 
+/* .cart-overview-no {
+  cursor: pointer;
+} */
+
 .item-in-cart {
   position: absolute;
   color: var(--mainWhite);
@@ -269,7 +273,7 @@
   border-radius: 10px;
   box-shadow: 1px 1px 7px var(--mainBlue);
   padding: 5px;
-  display: none;
+  display: flex;
   overflow: hidden;
   z-index: 1;
 }
@@ -543,9 +547,9 @@
   border-radius: 10px;
 }
 
-.product-details {
-  /* background-color: green; */
-}
+/* .product-details {
+  background-color: green;
+} */
 
 .product-container img {
   width: 70%;
@@ -684,6 +688,80 @@
 /* END OF ERROR ALERT STYLES */
 
 /* ******************************************************* */
+
+/* PRODUCT DETAILS STYLE */
+.product-full-details {
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  background-color: var(--mainGray);
+  display: none;
+  flex-direction: column;
+}
+
+.product-details-head {
+  background-color: var(--mainBlue);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  color: var(--mainWhite);
+}
+
+.product-full-details .back-arrow {
+  font-size: 20px;
+  margin-right: 30px;
+}
+
+.product-details-image {
+  width: 100%;
+  background-color: var(--mainWhite);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 10px;
+  border-radius: 20px;
+  margin: 10px 0;
+}
+
+.product-details-image img {
+  width: 70%;
+}
+
+.product-details-price {
+  font-size: 40px;
+  color: var(--mainBlue);
+  padding: 5px 10px;
+}
+
+.product-details-action {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* flex-direction: row;
+  justify-content: space-between;
+  align-items: center; */
+  font-size: 30px;
+  width: 100%;
+}
+
+.product-details-action .add-to-cart,
+.add-to-like {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  color: var(--mainWhite);
+}
+
+.add-to-cart:hover,
+.add-to-like:hover {
+  background-color: var(--mainYellow);
+  color: black;
+}
+/* END OF PRODUCT DETAILS STYLE */
+
 /* ******************************************************* */
 /* ******************************************************* */
 /* ******************************************************* */
