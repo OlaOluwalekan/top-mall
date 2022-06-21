@@ -17,6 +17,7 @@ import {
 
 // VARIABLES DECLARATION
 let productId = [];
+// localStorage.setItem("currentUser", "");
 
 let usersId = JSON.parse(localStorage.getItem("storedEmails"));
 let usersDetails = JSON.parse(localStorage.getItem("storedDetails"));
@@ -75,7 +76,6 @@ let ChangeImage = () => {
 // LOAD PRODUCTS TO PAGE CONTENT
 let LoadProductList = () => {
   let currentUser = localStorage.getItem("currentUser");
-  let currentUserIndex = usersId.indexOf(currentUser);
   for (let i = 0; i < productList.length; i++) {
     const productContainer = document.createElement("div");
     const productImageDiv = document.createElement("div");
@@ -146,6 +146,7 @@ let LoadProductList = () => {
 
     // productLikeDiv.style.color = "red";
     if (currentUser != "") {
+      let currentUserIndex = usersId.indexOf(currentUser);
       let currentUserLikedItems = usersDetails[currentUserIndex].likedItems;
       let currentUserCartItems = usersDetails[currentUserIndex].cartItems;
       for (let j = 0; j < currentUserLikedItems.length; j++) {

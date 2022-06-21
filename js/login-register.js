@@ -3,6 +3,9 @@ import { Users } from "./users.js";
 
 let usersId = [];
 let usersDetails = [];
+// localStorage.setItem("storedEmails", "");
+// localStorage.setItem("storedEmails", JSON.stringify(usersId));
+// localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
 
 let loginRegDiv = document.querySelector(".login-reg-container");
 let loginRegClose = document.querySelector(".close-login-reg");
