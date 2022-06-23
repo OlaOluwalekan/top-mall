@@ -1,5 +1,6 @@
 import { productList } from "./products.js";
 import { Users } from "./users.js";
+// import { usersId, usersDetails } from "./login-register.js";
 import {
   pagesHeader,
   userIconDiv,
@@ -17,6 +18,8 @@ import {
 
 // VARIABLES DECLARATION
 let productId = [];
+let eachItemCount = JSON.parse(localStorage.getItem("eachItemCount"));
+
 // localStorage.setItem("currentUser", "");
 
 let usersId = JSON.parse(localStorage.getItem("storedEmails"));
@@ -49,7 +52,17 @@ window.onload = () => {
   ChangeImage();
 
   LoadProductList();
+
+  GetItemsCount();
+
+  // localStorage.setItem();
 };
+
+// ****************************************************
+
+// ****************************************************
+
+// CHECK IF ANY USER EXIST
 
 // ****************************************************
 
@@ -236,6 +249,7 @@ function AddToLike() {
 // ****************************************************
 
 // ADD PRODUCTS TO CART ITEM
+// let eachItemCount = [];
 function AddToCart() {
   let currentUser = localStorage.getItem("currentUser");
   if (currentUser == "") {
@@ -250,6 +264,8 @@ function AddToCart() {
       let likedIndex = currentUserCartItems.indexOf(clickedId);
       currentUserCartItems.splice(likedIndex, 1);
       // currentUserLikedItems.splice(this.id, 1);
+      eachItemCount.splice(this.id, 1);
+      localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
       this.style.color = "grey";
       usersDetails[currentUserId].cartItems = currentUserCartItems;
     } else {
@@ -257,17 +273,38 @@ function AddToCart() {
       currentUserCartItems.push(clickedId);
       this.style.color = "red";
       usersDetails[currentUserId].cartItems = currentUserCartItems;
+      // for (let i = 0; i < currentUserCartItems.length; i++) {
+      if (eachItemCount == null) {
+        let eachItemCount = [];
+        eachItemCount.push(1);
+        localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+      } else {
+        eachItemCount.push(1);
+        localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+      }
+      // }
     }
     // console.log(userLikedItems);
     // localStorage.setItem(currentUserLikedItems,);
     console.log(usersDetails[currentUserId].cartItems);
     itemInCartH5.textContent = usersDetails[currentUserId].cartItems.length;
-
-    // console.log(usersDetails);
+    console.log(eachItemCount);
     localStorage.setItem("storedEmails", JSON.stringify(usersId));
     localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
+    localStorage.setItem("eachCountItems", JSON.stringify(eachItemCount));
+    location.reload();
   }
 }
+
+let GetItemsCount = () => {
+  let currentUser = localStorage.getItem("currentUser");
+  if (currentUser != "") {
+    let currentUserId = usersId.indexOf(currentUser);
+    let currentUserCartItems = usersDetails[currentUserId].cartItems;
+    console.log(currentUserCartItems);
+    for (let i = 0; i < currentUserCartItems.length; i++) {}
+  }
+};
 
 // ****************************************************
 

@@ -6,6 +6,7 @@ import { productList } from "./products.js";
 let userFullName = document.querySelector(".cart-header h1");
 let backFromCart = document.querySelector(".back-from-cart");
 let cartListContainer = document.querySelector(".cart-list");
+let eachItemCount = JSON.parse(localStorage.getItem("eachItemCount"));
 
 // ****************************************************
 
@@ -59,16 +60,17 @@ let LoadCartItems = () => {
   let currentUserCartItems = usersDetails[currentUserId].cartItems;
 
   let cartProducts = [];
+  let eachItemCount = JSON.parse(localStorage.getItem("eachItemCount"));
 
   for (let i = 0; i < currentUserCartItems.length; i++) {
     cartProducts.push(productList[currentUserCartItems[i]]);
   }
 
-  let eachItemCount = [];
   // for (let i = cartProducts.length - 1; i >= 0; i--) {
-  for (let i = 0; i < cartProducts.length; i++) {
-    eachItemCount.push(1);
-  }
+  // for (let i = 0; i < cartProducts.length; i++) {
+  //   eachItemCount.push(1);
+  // }
+  // let eachItemCount = JSON.parse(localStorage.getItem("eachItemCount"));
   console.log(eachItemCount);
 
   for (let i = cartProducts.length - 1; i >= 0; i--) {
@@ -104,6 +106,7 @@ let LoadCartItems = () => {
     cartButtonDiv.appendChild(cartButtonIcon);
     cartButtonIcon.classList.add("fas", "fa-trash");
     cartButtonDiv.classList.add("cart-remove-btn");
+    cartButtonDiv.id = i;
 
     // CART ITEM PRICE
     let cartPriceDiv = document.createElement("div");
@@ -128,6 +131,8 @@ let LoadCartItems = () => {
     cartPriceCounterDiv.classList.add("cart-price-counter");
     cartPriceCounterUp.classList.add("cart-item-increase");
     cartPriceCounterDown.classList.add("cart-item-increase");
+    cartPriceCounterUp.id = i;
+    cartPriceCounterDown.id = i;
 
     cartItemPrice.appendChild(cartItemPriceText);
     cartPriceDiv.appendChild(cartPriceCounterDiv);
@@ -144,7 +149,9 @@ let LoadCartItems = () => {
     cartItemDiv.appendChild(cartItemDetailsDiv);
     cartListContainer.appendChild(cartItemDiv);
 
-    // cartItemDiv.setAttribute("click", "RemoveItem(this)");
+    cartButtonDiv.addEventListener("click", RemoveItem);
+    cartPriceCounterUp.addEventListener("click", IncreaseItem);
+    cartPriceCounterDown.addEventListener("click", DecreaseItem);
   }
   return eachItemCount;
 };
@@ -176,15 +183,16 @@ let CalculateTotal = () => {
     // console.log(rawCartPrice);
     cartPrice.push(ithPrice);
   }
-  console.log(cartPrice);
+  // console.log(cartPrice);
 
   let rawCartSum = 0;
+
   for (let i = 0; i < cartPrice.length; i++) {
-    rawCartSum += Number(cartPrice[i]);
+    rawCartSum += Number(cartPrice[i]) * eachItemCount[i];
   }
-  console.log(rawCartSum);
+  // console.log(rawCartSum);
   let cartSum = InsertComma(rawCartSum);
-  console.log(InsertComma(rawCartSum));
+  // console.log(InsertComma(rawCartSum));
 
   let cartSumDiv = document.createElement("div");
   let cartSumWord = document.createElement("h4");
@@ -208,11 +216,9 @@ let InsertComma = (num) => {
   } else {
     num = num.toString();
     let numArray = num.split("");
-    let aNum = 0;
     for (let i = numArray.length - 1; i >= 0; i--) {
       if (i == numArray.length - 4) {
         numArray.splice(i + 1, 0, ",");
-        // aNum = numArray[i];
       }
     }
     let newArray = numArray.join("");
@@ -225,7 +231,6 @@ let InsertComma = (num) => {
       for (let i = checkArr.length - 1; i >= 0; i--) {
         if (i == checkArr.length - 4) {
           checkArr.splice(i + 1, 0, ",");
-          // aNum = numArray[i];
         }
       }
       newArray = checkArr.join("") + "," + fArr;
@@ -239,6 +244,46 @@ let InsertComma = (num) => {
 // ****************************************************
 
 // REMOVE ITEM FROM CART
-// let RemoveItem = () => {
-//   alert("removed");
-// };
+function RemoveItem() {
+  // console.log(this.id);
+  let currentUser = localStorage.getItem("currentUser");
+  let usersId = JSON.parse(localStorage.getItem("storedEmails"));
+  let usersDetails = JSON.parse(localStorage.getItem("storedDetails"));
+  let currentUserId = usersId.indexOf(currentUser);
+  let currentUserCartItems = usersDetails[currentUserId].cartItems;
+  console.log(currentUserCartItems);
+  // let cartIndex = currentUserCartItems.indexOf(this.id);
+  // console.log(this.id);
+  currentUserCartItems.splice(this.id, 1);
+  eachItemCount.splice(this.id, 1);
+  usersDetails[currentUserId].cartItems = currentUserCartItems;
+  console.log(currentUserCartItems);
+  localStorage.setItem("storedEmails", JSON.stringify(usersId));
+  localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
+  localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+  window.location.reload();
+}
+
+// ****************************************************
+
+// ****************************************************
+
+// INCREASE AND DECREASE CART ITEMS
+function IncreaseItem() {
+  // let eachItemCount = LoadCartItems();
+  eachItemCount[this.id] += 1;
+  console.log(eachItemCount);
+  localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+  window.location.reload();
+}
+
+function DecreaseItem() {
+  if (eachItemCount[this.id] == 1) {
+    eachItemCount[this.id] = 1;
+  } else {
+    eachItemCount[this.id] -= 1;
+    console.log(eachItemCount);
+  }
+  localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+  window.location.reload();
+}

@@ -18,12 +18,15 @@ let LoadUsers = () => {
   let storedEmails = JSON.parse(localStorage.getItem("storedEmails"));
   let storedDetails = JSON.parse(localStorage.getItem("storedDetails"));
 
-  for (let i = 0; i < storedEmails.length; i++) {
-    usersId.push(storedEmails[i]);
-    usersDetails.push(storedDetails[i]);
+  console.log(storedEmails);
+  if (storedEmails != null && storedDetails != null) {
+    for (let i = 0; i < storedEmails.length; i++) {
+      usersId.push(storedEmails[i]);
+      usersDetails.push(storedDetails[i]);
+    }
+    console.log(usersId);
+    console.log(usersDetails);
   }
-  console.log(usersId);
-  console.log(usersDetails);
 };
 
 window.onload = () => {
