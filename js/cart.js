@@ -6,7 +6,7 @@ import { productList } from "./products.js";
 let userFullName = document.querySelector(".cart-header h1");
 let backFromCart = document.querySelector(".back-from-cart");
 let cartListContainer = document.querySelector(".cart-list");
-let eachItemCount = JSON.parse(localStorage.getItem("eachItemCount"));
+// let eachItemCount = JSON.parse(localStorage.getItem("eachItemCount"));
 
 // ****************************************************
 
@@ -60,7 +60,7 @@ let LoadCartItems = () => {
   let currentUserCartItems = usersDetails[currentUserId].cartItems;
 
   let cartProducts = [];
-  let eachItemCount = JSON.parse(localStorage.getItem("eachItemCount"));
+  let currentUserEachItemCount = usersDetails[currentUserId].eachItemCount;
 
   for (let i = 0; i < currentUserCartItems.length; i++) {
     cartProducts.push(productList[currentUserCartItems[i]]);
@@ -71,7 +71,7 @@ let LoadCartItems = () => {
   //   eachItemCount.push(1);
   // }
   // let eachItemCount = JSON.parse(localStorage.getItem("eachItemCount"));
-  console.log(eachItemCount);
+  console.log(currentUserEachItemCount);
 
   for (let i = cartProducts.length - 1; i >= 0; i--) {
     // CREATE CONTAINER FOR EACH CART ITEM
@@ -120,7 +120,9 @@ let LoadCartItems = () => {
     let cartPriceCounter = document.createElement("div");
     let cartPriceCounterUpText = document.createTextNode("+");
     let cartPriceCounterDownText = document.createTextNode("-");
-    let cartPriceCounterText = document.createTextNode(eachItemCount[i]);
+    let cartPriceCounterText = document.createTextNode(
+      currentUserEachItemCount[i]
+    );
 
     cartPriceCounter.appendChild(cartPriceCounterText);
     cartPriceCounterUp.appendChild(cartPriceCounterUpText);
@@ -153,7 +155,7 @@ let LoadCartItems = () => {
     cartPriceCounterUp.addEventListener("click", IncreaseItem);
     cartPriceCounterDown.addEventListener("click", DecreaseItem);
   }
-  return eachItemCount;
+  // return eachItemCount;
 };
 
 // ****************************************************
@@ -167,6 +169,7 @@ let CalculateTotal = () => {
   let usersDetails = JSON.parse(localStorage.getItem("storedDetails"));
   let currentUserId = usersId.indexOf(currentUser);
   let currentUserCartItems = usersDetails[currentUserId].cartItems;
+  let currentUserEachItemCount = usersDetails[currentUserId].eachItemCount;
   // console.log(currentUserCartItems);
   let cartProducts = [];
 
@@ -188,7 +191,7 @@ let CalculateTotal = () => {
   let rawCartSum = 0;
 
   for (let i = 0; i < cartPrice.length; i++) {
-    rawCartSum += Number(cartPrice[i]) * eachItemCount[i];
+    rawCartSum += Number(cartPrice[i]) * currentUserEachItemCount[i];
   }
   // console.log(rawCartSum);
   let cartSum = InsertComma(rawCartSum);
@@ -251,16 +254,17 @@ function RemoveItem() {
   let usersDetails = JSON.parse(localStorage.getItem("storedDetails"));
   let currentUserId = usersId.indexOf(currentUser);
   let currentUserCartItems = usersDetails[currentUserId].cartItems;
+  let currentUserEachItemCount = usersDetails[currentUserId].eachItemCount;
   console.log(currentUserCartItems);
   // let cartIndex = currentUserCartItems.indexOf(this.id);
   // console.log(this.id);
   currentUserCartItems.splice(this.id, 1);
-  eachItemCount.splice(this.id, 1);
+  currentUserEachItemCount.splice(this.id, 1);
   usersDetails[currentUserId].cartItems = currentUserCartItems;
   console.log(currentUserCartItems);
   localStorage.setItem("storedEmails", JSON.stringify(usersId));
   localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
-  localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+  // localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
   window.location.reload();
 }
 
@@ -270,20 +274,32 @@ function RemoveItem() {
 
 // INCREASE AND DECREASE CART ITEMS
 function IncreaseItem() {
+  let currentUser = localStorage.getItem("currentUser");
+  let usersId = JSON.parse(localStorage.getItem("storedEmails"));
+  let usersDetails = JSON.parse(localStorage.getItem("storedDetails"));
+  let currentUserId = usersId.indexOf(currentUser);
+  // let currentUserCartItems = usersDetails[currentUserId].cartItems;
+  let currentUserEachItemCount = usersDetails[currentUserId].eachItemCount;
   // let eachItemCount = LoadCartItems();
-  eachItemCount[this.id] += 1;
-  console.log(eachItemCount);
-  localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+  currentUserEachItemCount[this.id] += 1;
+  console.log(currentUserEachItemCount);
+  localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
   window.location.reload();
 }
 
 function DecreaseItem() {
-  if (eachItemCount[this.id] == 1) {
-    eachItemCount[this.id] = 1;
+  let currentUser = localStorage.getItem("currentUser");
+  let usersId = JSON.parse(localStorage.getItem("storedEmails"));
+  let usersDetails = JSON.parse(localStorage.getItem("storedDetails"));
+  let currentUserId = usersId.indexOf(currentUser);
+  // let currentUserCartItems = usersDetails[currentUserId].cartItems;
+  let currentUserEachItemCount = usersDetails[currentUserId].eachItemCount;
+  if (currentUserEachItemCount[this.id] == 1) {
+    currentUserEachItemCount[this.id] = 1;
   } else {
-    eachItemCount[this.id] -= 1;
-    console.log(eachItemCount);
+    currentUserEachItemCount[this.id] -= 1;
+    console.log(currentUserEachItemCount);
   }
-  localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+  localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
   window.location.reload();
 }

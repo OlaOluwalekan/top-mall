@@ -86,6 +86,7 @@ registerBtn.onclick = () => {
           userPassReg.value,
           false,
           [],
+          [],
           []
         );
         usersDetails.push(newUser);

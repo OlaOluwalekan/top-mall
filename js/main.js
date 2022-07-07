@@ -18,7 +18,7 @@ import {
 
 // VARIABLES DECLARATION
 let productId = [];
-let eachItemCount = JSON.parse(localStorage.getItem("eachItemCount"));
+// let eachItemCount = JSON.parse(localStorage.getItem("eachItemCount"));
 
 // localStorage.setItem("currentUser", "");
 
@@ -54,8 +54,6 @@ window.onload = () => {
   LoadProductList();
 
   GetItemsCount();
-
-  // localStorage.setItem();
 };
 
 // ****************************************************
@@ -158,7 +156,7 @@ let LoadProductList = () => {
     productAddToCartDiv.addEventListener("click", AddToCart);
 
     // productLikeDiv.style.color = "red";
-    if (currentUser != "") {
+    if (currentUser != "" && currentUser != null) {
       let currentUserIndex = usersId.indexOf(currentUser);
       let currentUserLikedItems = usersDetails[currentUserIndex].likedItems;
       let currentUserCartItems = usersDetails[currentUserIndex].cartItems;
@@ -215,7 +213,7 @@ goBackFromDetails.onclick = () => {
 // ADD PRODUCTS TO LIKED ITEMS
 function AddToLike() {
   let currentUser = localStorage.getItem("currentUser");
-  if (currentUser == "") {
+  if (currentUser == "" || currentUser == null) {
     alert("You need to login first");
     window.location.href = "./pages/login-register.html";
   } else {
@@ -252,20 +250,21 @@ function AddToLike() {
 // let eachItemCount = [];
 function AddToCart() {
   let currentUser = localStorage.getItem("currentUser");
-  if (currentUser == "") {
+  if (currentUser == "" || currentUser == null) {
     alert("You need to login first");
     window.location.href = "./pages/login-register.html";
   } else {
     let clickedId = this.id;
     let currentUserId = usersId.indexOf(currentUser);
     let currentUserCartItems = usersDetails[currentUserId].cartItems;
+    let currentUserEachItemCount = usersDetails[currentUserId].eachItemCount;
     if (currentUserCartItems.includes(clickedId)) {
       // let likedIndex = userLikedItems.indexOf(productList[this.id]);
       let likedIndex = currentUserCartItems.indexOf(clickedId);
       currentUserCartItems.splice(likedIndex, 1);
       // currentUserLikedItems.splice(this.id, 1);
-      eachItemCount.splice(this.id, 1);
-      localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+      currentUserEachItemCount.splice(this.id, 1);
+      // localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
       this.style.color = "grey";
       usersDetails[currentUserId].cartItems = currentUserCartItems;
     } else {
@@ -274,31 +273,31 @@ function AddToCart() {
       this.style.color = "red";
       usersDetails[currentUserId].cartItems = currentUserCartItems;
       // for (let i = 0; i < currentUserCartItems.length; i++) {
-      if (eachItemCount == null) {
-        let eachItemCount = [];
-        eachItemCount.push(1);
-        localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
-      } else {
-        eachItemCount.push(1);
-        localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
-      }
+      // if (eachItemCount == null) {
+      // let eachItemCount = [];
+      currentUserEachItemCount.push(1);
+      // localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+      // } else {
+      // eachItemCount.push(1);
+      // localStorage.setItem("eachItemCount", JSON.stringify(eachItemCount));
+      // }
       // }
     }
-    // console.log(userLikedItems);
+    console.log(currentUserEachItemCount);
     // localStorage.setItem(currentUserLikedItems,);
     console.log(usersDetails[currentUserId].cartItems);
     itemInCartH5.textContent = usersDetails[currentUserId].cartItems.length;
-    console.log(eachItemCount);
+    // console.log(eachItemCount);
     localStorage.setItem("storedEmails", JSON.stringify(usersId));
     localStorage.setItem("storedDetails", JSON.stringify(usersDetails));
-    localStorage.setItem("eachCountItems", JSON.stringify(eachItemCount));
+    // localStorage.setItem("eachCountItems", JSON.stringify(eachItemCount));
     location.reload();
   }
 }
 
 let GetItemsCount = () => {
   let currentUser = localStorage.getItem("currentUser");
-  if (currentUser != "") {
+  if (currentUser != "" && currentUser != null) {
     let currentUserId = usersId.indexOf(currentUser);
     let currentUserCartItems = usersDetails[currentUserId].cartItems;
     console.log(currentUserCartItems);
@@ -313,14 +312,19 @@ let GetItemsCount = () => {
 // CHECK IF A USER IS LOGGED IN
 let CheckLoginStatus = () => {
   let currentUser = localStorage.getItem("currentUser");
-  if (currentUser == "") {
+  if (currentUser != null) {
+    if (currentUser == "") {
+      notLogedinIconDiv.style.display = "flex";
+      loggedinIconDiv.style.display = "none";
+    } else {
+      let currentUserFirstLetter = currentUser.charAt(0).toUpperCase();
+      loggedinIconText.textContent = currentUserFirstLetter;
+      notLogedinIconDiv.style.display = "none";
+      loggedinIconDiv.style.display = "flex";
+    }
+  } else {
     notLogedinIconDiv.style.display = "flex";
     loggedinIconDiv.style.display = "none";
-  } else {
-    let currentUserFirstLetter = currentUser.charAt(0).toUpperCase();
-    loggedinIconText.textContent = currentUserFirstLetter;
-    notLogedinIconDiv.style.display = "none";
-    loggedinIconDiv.style.display = "flex";
   }
 };
 
@@ -331,7 +335,7 @@ let CheckLoginStatus = () => {
 // DIRECTS USER TO LOGIN OR GOTO CART OR PROFILE
 userIconDiv.onclick = () => {
   let currentUser = localStorage.getItem("currentUser");
-  if (currentUser == "") {
+  if (currentUser == "" || currentUser == null) {
     window.location.href = "./pages/login-register.html";
   } else {
     if (userOptions.style.display == "none") {

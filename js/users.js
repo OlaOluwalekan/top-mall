@@ -8,7 +8,8 @@ class Users {
     password,
     loginStatus,
     cartItems,
-    likedItems
+    likedItems,
+    eachItemCount
   ) {
     this.email = email;
     this.fullName = fullName;
@@ -17,6 +18,7 @@ class Users {
     this.loginStatus = loginStatus;
     this.cartItems = cartItems;
     this.likedItems = likedItems;
+    this.eachItemCount = eachItemCount;
   }
 }
 
